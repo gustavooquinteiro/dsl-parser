@@ -3,7 +3,7 @@
 A maior linguagem de todos os tempos!
 
 Exercicio @
-inc 14 dec inc dec inc dec inc begin fwd inc dec inc dec inc dec inc rwd dec end fwd write
+inc 4 dec inc 3 dec inc 2 dec inc 2 begin fwd inc 4 dec inc 3 dec inc 2 dec inc 2 rwd dec end fwd write
 
 ++++-+++-++-++[>++++-+++-++-++<-]>.
 

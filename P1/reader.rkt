@@ -32,6 +32,7 @@
        ["7" (token 'SEVEN lexeme)]
        ["8" (token 'EIGHT lexeme)]
        ["9" (token 'NINE lexeme)]
+       ["0" (token 'ZERO lexeme)]
        [any-char (next-token)]))
     (bf-lexer port))
   next-token) 
