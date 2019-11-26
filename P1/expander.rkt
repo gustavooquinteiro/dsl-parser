@@ -25,7 +25,9 @@
   [(rbf-op-n RWD [integer]) #'(rewind-n integer)]
   [(rbf-op WRITE) #'(write)]
   [(rbf-op READ) #'(read)])
+
 (provide rbf-op)
+
 (define tape (make-vector 3000 0))
 (define ptr 0)
 
@@ -42,7 +44,7 @@
   (set-current-byte! (+ integer (current-byte))))
 
 (define (rewind-n [integer 1])
-  (set-current-byte! (- integer (current-byte))))
+  (set-current-byte! (- (current-byte) integer)))
 
 (define (set-current-byte! val)
   (vector-set! tape ptr val))
