@@ -19,10 +19,10 @@
 (provide rbf-loop)
 
 (define-macro-cases rbf-op
-  [(rbf-op-n INC [integer]) #'(increment-n integer)]
-  [(rbf-op-n DEC [integer]) #'(decrement-n integer)]
-  [(rbf-op-n FWD [integer]) #'(foward-n integer)]
-  [(rbf-op-n RWD [integer]) #'(rewind-n integer)]
+  [(rbf-op (rbf-op-n "inc" [INTEGER])) #'(increment-n [INTEGER])]
+  [(rbf-op (rbf-op-n "dec"[INTEGER])) #'(decrement-n [INTEGER])]
+  [(rbf-op (rbf-op-n "fwd" [INTEGER])) #'(foward-n [INTEGER])]
+  [(rbf-op (rbf-op-n "rwd" [INTEGER])) #'(rewind-n [INTEGER])]
   [(rbf-op WRITE) #'(write)]
   [(rbf-op READ) #'(read)])
 

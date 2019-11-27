@@ -11,6 +11,8 @@
 
 (require brag/support)
 
+(define-lex-abbrev digits (:+ (char-set "0123456789")))
+
 (define (make-tokenizer port)
   (define (next-token)
     (define bf-lexer
@@ -23,16 +25,7 @@
        ["end" (token 'END lexeme)]
        ["write" (token 'WRITE lexeme)]
        ["read" (token 'READ lexeme)]
-       ["1" (token 'ONE lexeme)]
-       ["2" (token 'TWO lexeme)]
-       ["3" (token 'THREE lexeme)]
-       ["4" (token 'FOUR lexeme)]
-       ["5" (token 'FIVE lexeme)]
-       ["6" (token 'SIX lexeme)]
-       ["7" (token 'SEVEN lexeme)]
-       ["8" (token 'EIGHT lexeme)]
-       ["9" (token 'NINE lexeme)]
-       ["0" (token 'ZERO lexeme)]
+       [digits (token 'INTEGER (string->number lexeme))]
        [any-char (next-token)]))
     (bf-lexer port))
   next-token) 
