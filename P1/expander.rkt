@@ -20,7 +20,7 @@
 
 (define-macro-cases rbf-op
   [(rbf-op "inc" INTEGER) #'(increment-n INTEGER)]
-  [(rbf-op "dec"INTEGER) #'(decrement-n INTEGER)]
+  [(rbf-op "dec" INTEGER) #'(decrement-n INTEGER)]
   [(rbf-op "fwd" INTEGER) #'(foward-n INTEGER)]
   [(rbf-op "rwd" INTEGER) #'(rewind-n INTEGER)]
   [(rbf-op "inc") #'(increment-n)]
@@ -39,16 +39,16 @@
   (vector-ref tape ptr))
 
 (define (increment-n [integer 1])
-  (set! ptr (+ integer ptr)))
+  (set-current-byte! (+ (current-byte) integer)))
 
 (define (decrement-n [integer 1])
-  (set! ptr (- ptr integer)))
+  (set-current-byte! (- (current-byte) integer)))
 
 (define (foward-n [integer 1])
-  (set-current-byte! (+ integer (current-byte))))
+  (set! ptr (+ integer ptr)))
 
 (define (rewind-n [integer 1])
-  (set-current-byte! (- (current-byte) integer)))
+  (set! ptr (- ptr integer)))
 
 (define (set-current-byte! val)
   (vector-set! tape ptr val))
