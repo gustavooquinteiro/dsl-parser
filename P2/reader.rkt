@@ -18,10 +18,17 @@
     (define bf-lexer
       (lexer
        ["add" (token 'ADD lexeme)]
+       ["addi" (token 'ADDI lexeme)]
        ["sub" (token 'SUB lexeme)]
+       ["subi" (token 'SUBI lexeme)]
        ["br" (token 'BR lexeme)]
        ["cr" (token 'CR lexeme)]
        ["dr" (token 'DR lexeme)]
+       ["beq" (token 'BEQ lexeme)]
+       ["bne" (token 'BNE lexeme)]
+       ["j" (token 'J lexeme)]
+       ["lw" (token 'LW lexeme)]
+       ["sw" (token 'SW lexeme)]
        ["write" (token 'WRITE lexeme)]
        [digits (token 'INTEGER (string->number lexeme))]
        [any-char (next-token)]))
