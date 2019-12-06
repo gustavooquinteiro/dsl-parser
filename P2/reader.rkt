@@ -26,6 +26,7 @@
        ["dr" (token 'DR lexeme)]
        ["beq" (token 'BEQ lexeme)]
        ["bne" (token 'BNE lexeme)]
+       ["end" (token 'END lexeme)]
        ["j" (token 'J lexeme)]
        ["lw" (token 'LW lexeme)]
        ["sw" (token 'SW lexeme)]
