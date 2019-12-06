@@ -23,9 +23,9 @@
 
 
 (define-macro-cases mips-branch
-  [(mips-branch "beq" OPERATION-OR-LOOP-ARGS ... "end")] #'(if (zero? br) OPERATION-OR-LOOP-ARGS ...)
-  [(mips-branch "bne" OPERATION-OR-LOOP-ARGS ... "end")] #'(if (not (zero? br)) OPERATION-OR-LOOP-ARGS ...)
-  [(mips-branch "j" OPERATION-OR-LOOP-ARGS ... "end")] #'(until (zero? br) OPERATION-OR-LOOP-ARGS ...))
+  [(mips-branch "beq" OPERATION-OR-LOOP-ARGS ... "end") #'(if (zero? br) OPERATION-OR-LOOP-ARGS ...)]
+  [(mips-branch "bne" OPERATION-OR-LOOP-ARGS ... "end") #'(if (not (zero? br)) OPERATION-OR-LOOP-ARGS ...)]
+  [(mips-branch "j" OPERATION-OR-LOOP-ARGS ... "end") #'(until (zero? br) OPERATION-OR-LOOP-ARGS ...)])
 
 (provide mips-branch)
 
@@ -99,7 +99,6 @@
 (define (get-from-memory reg1 integer)
   (vector-ref memory (+ reg1 integer)))
 
-
 (define (increment-immediate register1 register2 integer)
   (set! register2 (+ register1 integer))
   (next-pc))
@@ -128,7 +127,7 @@
   (next-pc integer #t))
 
 (define (write reg)
-  (write-byte reg)
+  (display reg)
   (next-pc))
  
 
