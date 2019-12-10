@@ -12,16 +12,6 @@
 
 (provide mips-program)
 
-(define memory (make-vector 65536 0))
-(define pc 0)
-(define stk 0)
-(define frp 0)
-(define acc 0)
-(define br 0)
-(define cr 0)
-(define dr 0)
-
-
 (define-macro-cases mips-branch
   [(mips-branch "beq" OPERATION-OR-LOOP-ARGS ... "end") #'(if (zero? br) OPERATION-OR-LOOP-ARGS ...)]
   [(mips-branch "bne" OPERATION-OR-LOOP-ARGS ... "end") #'(if (not (zero? br)) OPERATION-OR-LOOP-ARGS ...)]
@@ -56,13 +46,25 @@
   [(mips-instruction "add" "cr" "dr" "br") #'(increment cr dr br)]
   [(mips-instruction "add" "dr" "cr" "br") #'(increment dr cr br)]
   [(mips-instruction "add" "dr" "br" "cr") #'(increment dr br cr)]
-
+  [(mips-instruction "add" "br" "cr" "cr") #'(increment br cr cr)]
+  [(mips-instruction "add" "br" "dr" "dr") #'(increment br dr dr)]
+  [(mips-instruction "add" "cr" "br" "br") #'(increment cr br br)]
+  [(mips-instruction "add" "cr" "dr" "dr") #'(increment cr dr dr)]
+  [(mips-instruction "add" "dr" "br" "br") #'(increment dr br br)]
+  [(mips-instruction "add" "dr" "cr" "cr") #'(increment dr cr cr)]
+  
   [(mips-instruction "sub" "br" "cr" "dr") #'(decrement br cr dr)]
   [(mips-instruction "sub" "br" "dr" "cr") #'(decrement br dr cr)]
   [(mips-instruction "sub" "cr" "br" "dr") #'(decrement cr br dr)]
   [(mips-instruction "sub" "cr" "dr" "br") #'(decrement cr dr br)]
   [(mips-instruction "sub" "dr" "cr" "br") #'(decrement dr cr br)]
   [(mips-instruction "sub" "dr" "br" "cr") #'(decrement dr br cr)]
+  [(mips-instruction "sub" "br" "cr" "cr") #'(decrement br cr cr)]
+  [(mips-instruction "sub" "br" "dr" "dr") #'(decrement br dr dr)]
+  [(mips-instruction "sub" "cr" "br" "br") #'(decrement cr br br)]
+  [(mips-instruction "sub" "cr" "dr" "dr") #'(decrement cr dr dr)]
+  [(mips-instruction "sub" "dr" "br" "br") #'(decrement dr br br)]
+  [(mips-instruction "sub" "dr" "cr" "cr") #'(decrement dr cr cr)]
   
   [(mips-instruction "lw" "br" "br" INTEGER) #'(load-word br br INTEGER)]
   [(mips-instruction "lw" "br" "cr" INTEGER) #'(load-word br cr INTEGER)]
@@ -90,6 +92,16 @@
 
 (provide mips-instruction)
 
+(define memory (make-vector 65536 0))
+(define pc 0)
+(define stk 0)
+(define frp 0)
+(define acc 0)
+(define br 0)
+(define cr 0)
+(define dr 0)
+
+
 (define (next-pc [branch 0][jump #f])
   (if jump
       (set! pc branch)
@@ -100,34 +112,27 @@
   (vector-ref memory (+ reg1 integer)))
 
 (define (increment-immediate register1 register2 integer)
-  (set! register2 (+ register1 integer))
-  (next-pc))
+  (set! register2 (+ register1 integer)) (displayln register2) (next-pc))
 
 (define (decrement-immediate register1 register2 integer)
-  (set! register2 (- register1 integer))
-  (next-pc))
+  (set! register2 (- register1 integer)) (displayln register2) (next-pc))
 
 (define (increment register1 register2 register3)
-  (set! register2 (+ register1  register3))
-  (next-pc))
+  (set! register2 (+ register1  register3)) (displayln register2) (next-pc))
 
 (define (decrement register1 register2 register3)
-  (set! register2 (- register1 register3))
-  (next-pc))
+  (set! register2 (- register1 register3)) (displayln register2) (next-pc))
 
 (define (load-word register1 register2 integer)
-  (set! register2 (get-from-memory register1 integer))
-  (next-pc))
+  (set! register2 (get-from-memory register1 integer)) (next-pc))
 
 (define (store-word register1 register2 integer)
-  (vector-set! memory (+ register1 integer) register2)
-  (next-pc))
+  (vector-set! memory (+ register1 integer) register2) (next-pc))
 
 (define (jump integer)
   (next-pc integer #t))
 
 (define (write reg)
-  (display reg)
-  (next-pc))
+  (display reg) (next-pc))
  
 
